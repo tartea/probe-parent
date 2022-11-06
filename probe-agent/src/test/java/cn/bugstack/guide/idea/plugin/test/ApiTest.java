@@ -2,7 +2,7 @@ package cn.bugstack.guide.idea.plugin.test;
 
 /**
  * VM options：
- * -javaagent:E:\itstack\booklet\idea-plugin\guide\guide-idea-plugin-probe\probe-agent\build\libs\probe-agent-1.0-SNAPSHOT-all.jar
+ * -javaagent:/Users/jiaxiansheng/develop/idea/code-quality-delivery-plugin/probe-agent/build/libs/ProjectProbe.jar=abc=123&qwe=1231
  */
 public class ApiTest {
 
