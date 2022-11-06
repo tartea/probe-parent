@@ -1,4 +1,5 @@
 rootProject.name = 'code-quality-delivery-plugin'
 include 'probe-agent'
 include 'probe-plugin'
+include 'probe-common'
 
