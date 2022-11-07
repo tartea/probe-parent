@@ -1,5 +1,5 @@
-rootProject.name = 'code-quality-delivery-plugin'
+rootProject.name = 'probe-parent'
+include 'probe-common'
 include 'probe-agent'
 include 'probe-plugin'
-include 'probe-common'
 

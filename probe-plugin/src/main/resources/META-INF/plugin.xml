@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>org.tartea.idea.plugin</id>
+    <id>org.tartea.plugin</id>
     <name>Probe</name>
     <vendor email="1262466460@qq.com" url="">tartea</vendor>
 
@@ -23,15 +23,15 @@
     <extensions defaultExtensionNs="com.intellij">
         <!--        agent设置面板-->
         <projectConfigurable groupId="tools" displayName="Setting Agent" id="settingFactory"
-                             instance="org.tartea.idea.plugin.setting.factory.SettingFactory"/>
+                             instance="org.tartea.plugin.setting.factory.SettingFactory"/>
 
         <!--        数据缓存-->
-        <applicationService serviceImplementation="org.tartea.idea.plugin.infrastructure.DataSetting"/>
-        <projectService serviceImplementation="org.tartea.idea.plugin.infrastructure.DataSetting"/>
+        <applicationService serviceImplementation="org.tartea.plugin.infrastructure.DataSetting"/>
+        <projectService serviceImplementation="org.tartea.plugin.infrastructure.DataSetting"/>
         <!-- Add your extensions here -->
         <!--        运行时执行-->
         <programRunner id="customJavaProgramRunner"
-                       implementation="org.tartea.idea.plugin.runner.CustomJavaProgramRunner" order="first"/>
+                       implementation="org.tartea.plugin.runner.CustomJavaProgramRunner" order="first"/>
     </extensions>
 
     <actions>
