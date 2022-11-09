@@ -6,7 +6,7 @@ plugins {
 dependencies {
     // compile project(":probe-agent") 另一种引入工程的方式
     implementation fileTree(dir: 'libs', includes: ['*jar'])
-    implementation project(':probe-common')
+//    implementation project(':probe-common')
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/

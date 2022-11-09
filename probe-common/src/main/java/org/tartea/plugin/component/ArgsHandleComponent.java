@@ -22,13 +22,13 @@ public class ArgsHandleComponent {
      * @param paramMap
      * @return
      */
-    public static String join(Map<String, String> paramMap) {
+    public static String join(Map<String, Object> paramMap) {
         if (CollectionUtil.isEmpty(paramMap)) {
             return "";
         }
         List<String> result = new ArrayList<String>(paramMap.size());
         paramMap.forEach((key, value) -> {
-            if (StrUtil.isNotBlank(key) && StrUtil.isNotBlank(value)) {
+            if (StrUtil.isNotBlank(key) && Objects.nonNull(value)) {
                 result.add(key + "=" + value);
             }
         });

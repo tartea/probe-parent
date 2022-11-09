@@ -16,7 +16,12 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.PsiJavaFileImpl;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.tartea.plugin.component.ArgsHandleComponent;
+import org.tartea.plugin.constants.BaseConstant;
 import org.tartea.plugin.infrastructure.DataSetting;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CustomJavaProgramRunner extends DefaultJavaProgramRunner {
 
@@ -39,10 +44,17 @@ public class CustomJavaProgramRunner extends DefaultJavaProgramRunner {
                 Project project = env.getDataContext().getData(CommonDataKeys.PROJECT);
                 Messages.showWarningDialog(project, "请手动配置agent路径", "Warning");
             } else {
-                parametersList.add("-javaagent:" + instance.getAgentPath() + "=" + packageName);
+                parametersList.add("-javaagent:" + instance.getAgentPath() + "=" + buildParam(packageName));
             }
         }
         return super.doExecute(state, env);
     }
 
+
+    private String buildParam(String packageName){
+        Map<String, Object> params = new HashMap<String, Object>();
+
+        params.put(BaseConstant.ARGS_PACKAGE,packageName);
+        return ArgsHandleComponent.join(params);
+    }
 }
