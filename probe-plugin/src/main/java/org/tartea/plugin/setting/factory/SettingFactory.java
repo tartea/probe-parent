@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.tartea.plugin.infrastructure.DataSetting;
+import org.tartea.plugin.infrastructure.DataState;
 import org.tartea.plugin.setting.ui.SettingUI;
 
 import javax.swing.*;
@@ -17,12 +18,12 @@ public class SettingFactory implements SearchableConfigurable {
 
     @Override
     public @NotNull String getId() {
-        return "setting.id";
+        return "probe.id";
     }
 
     @Override
     public @Nls(capitalization = Nls.Capitalization.Title) String getDisplayName() {
-        return "setting-config";
+        return "probe-config";
     }
 
     @Override
@@ -37,10 +38,16 @@ public class SettingFactory implements SearchableConfigurable {
 
     @Override
     public void apply() throws ConfigurationException {
-        String url = settingUI.getTextField().getText();
-        // 设置文本信息
+
         try {
-            instance.getState().setAgentPath(url);
+            DataState state = instance.getState();
+
+            String url = settingUI.getTextField().getText();
+            state.setAgentPath(url);
+
+            boolean mysqlSetting = settingUI.getMysqlCheckBox().isSelected();
+            state.setMysqlSetting(mysqlSetting);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

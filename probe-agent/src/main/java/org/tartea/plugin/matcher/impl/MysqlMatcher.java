@@ -17,22 +17,29 @@ import java.util.Objects;
  */
 public class MysqlMatcher extends AbstractMatcher<Boolean> {
 
-    public MysqlMatcher(Boolean param) {
-        this.param = param;
+    public MysqlMatcher(Boolean setting) {
+        this.setting = setting;
     }
 
     @Override
     public ElementMatcher.Junction getMatcher(ElementMatcher.Junction elementMatcher) {
+        if (!this.setting) {
+            return elementMatcher;
+        }
         if (Objects.isNull(elementMatcher)) {
             return ElementMatchers.nameStartsWith("com.mysql.cj.jdbc.ClientPreparedStatement")
                     .or(ElementMatchers.nameStartsWith("com.mysql.jdbc.PreparedStatement"));
         }
         return elementMatcher.or(ElementMatchers.nameStartsWith("com.mysql.cj.jdbc.ClientPreparedStatement"))
                 .or(ElementMatchers.nameStartsWith("com.mysql.jdbc.PreparedStatement"));
+
     }
 
     @Override
     public DynamicType.Builder getBuilder(DynamicType.Builder builder) {
+        if(!this.setting){
+            return builder;
+        }
         return builder
                 .method(ElementMatchers.named("execute"))
                 .intercept(MethodDelegation.to(MysqlMonitor.class));

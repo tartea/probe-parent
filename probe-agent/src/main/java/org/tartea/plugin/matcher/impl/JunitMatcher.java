@@ -18,16 +18,16 @@ import java.util.Objects;
 public class JunitMatcher extends AbstractMatcher<String> {
 
 
-    public JunitMatcher(String param) {
-        this.param = param;
+    public JunitMatcher(String setting) {
+        this.setting = setting;
     }
 
     @Override
     public ElementMatcher.Junction getMatcher(ElementMatcher.Junction elementMatcher) {
         if (Objects.isNull(elementMatcher)) {
-            return ElementMatchers.nameStartsWith(this.param);
+            return ElementMatchers.nameStartsWith(this.setting);
         }
-        return elementMatcher.or(ElementMatchers.nameStartsWith(this.param));
+        return elementMatcher.or(ElementMatchers.nameStartsWith(this.setting));
     }
 
     @Override

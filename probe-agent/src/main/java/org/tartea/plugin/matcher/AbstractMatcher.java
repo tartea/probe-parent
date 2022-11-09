@@ -11,7 +11,7 @@ import net.bytebuddy.matcher.ElementMatcher;
  */
 public abstract class AbstractMatcher<T> {
 
-    protected T param;
+    protected T setting;
 
     abstract public ElementMatcher.Junction getMatcher(ElementMatcher.Junction elementMatcher);
 

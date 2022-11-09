@@ -13,13 +13,19 @@ public class SettingUI {
     private JTextField textField;
     private JButton btn;
     private JLabel label;
+    private JLabel settingName;
+    private JCheckBox mysqlCheckBox;
 
     private DataSetting instance = DataSetting.getInstance();
 
     public SettingUI() {
+        //设置agent
         if(StringUtils.isNotEmpty(instance.getAgentPath())){
             textField.setText(instance.getAgentPath());
         }
+        //设置mysql
+        mysqlCheckBox.setSelected(instance.getMysqlSetting());
+
         // 给按钮添加一个选择文件的事件
         btn.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
@@ -38,5 +44,9 @@ public class SettingUI {
 
     public JTextField getTextField() {
         return textField;
+    }
+
+    public JCheckBox getMysqlCheckBox(){
+        return mysqlCheckBox;
     }
 }

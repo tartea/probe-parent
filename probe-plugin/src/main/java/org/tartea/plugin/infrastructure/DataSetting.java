@@ -30,11 +30,25 @@ public class DataSetting implements PersistentStateComponent<DataState> {
         this.state = state;
     }
 
+    /**
+     * 获取agent路径
+     *
+     * @return
+     */
     public String getAgentPath() {
         if (StringUtils.isEmpty(state.getAgentPath())) {
             state.setAgentPath(PluginUtil.getAgentCoreJarPath());
         }
         return state.getAgentPath();
+    }
+
+    /**
+     * 获取mysql配置
+     *
+     * @return
+     */
+    public boolean getMysqlSetting() {
+        return state.getMysqlSetting();
     }
 
 }

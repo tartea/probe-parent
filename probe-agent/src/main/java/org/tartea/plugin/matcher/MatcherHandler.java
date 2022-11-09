@@ -8,10 +8,7 @@ import org.tartea.plugin.constants.BaseConstant;
 import org.tartea.plugin.matcher.impl.MysqlMatcher;
 import org.tartea.plugin.matcher.impl.JunitMatcher;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 根据参数匹配合适的方法
@@ -36,7 +33,7 @@ public class MatcherHandler {
             matcherList.add(new JunitMatcher((String) params.get(BaseConstant.ARGS_PACKAGE)));
         }
         if (params.containsKey(BaseConstant.ARGS_MYSQL)) {
-            matcherList.add(new MysqlMatcher((Boolean) params.get(BaseConstant.ARGS_MYSQL)));
+            matcherList.add(new MysqlMatcher(Objects.equals(params.get(BaseConstant.ARGS_MYSQL), "true")));
         }
     }
 

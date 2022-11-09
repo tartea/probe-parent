@@ -50,11 +50,16 @@ public class CustomJavaProgramRunner extends DefaultJavaProgramRunner {
         return super.doExecute(state, env);
     }
 
-
-    private String buildParam(String packageName){
+    /**
+     * 设置参数
+     *
+     * @param packageName
+     * @return
+     */
+    private String buildParam(String packageName) {
         Map<String, Object> params = new HashMap<String, Object>();
-
-        params.put(BaseConstant.ARGS_PACKAGE,packageName);
+        params.put(BaseConstant.ARGS_PACKAGE, packageName);
+        params.put(BaseConstant.ARGS_MYSQL, instance.getMysqlSetting());
         return ArgsHandleComponent.join(params);
     }
 }
