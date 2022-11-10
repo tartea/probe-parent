@@ -38,30 +38,52 @@ public class MysqlMonitor {
         }
     }
 
-
+    /**
+     * 5.8以下的驱动
+     *
+     * @param obj
+     */
     private static void buildPreparedStatementSql(Object obj) {
-        String originalSql = (String) BeanUtil.getFieldValue(obj, "originalSql");
-        String replaceSql = ReflectUtil.invoke(obj, "asSql");
+        try {
+            String originalSql = (String) BeanUtil.getFieldValue(obj, "originalSql");
+            String replaceSql = ReflectUtil.invoke(obj, "asSql");
 
-        sqlInfo(originalSql, replaceSql);
+            formatPrintInfo(originalSql, replaceSql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 
+    /**
+     * mysql 5.8以后的驱动
+     *
+     * @param obj
+     */
     private static void buildClientPreparedStatement(Object obj) {
-        String originalSql = ReflectUtil.invoke(obj, "getPreparedSql");
+        try {
+            String originalSql = ReflectUtil.invoke(obj, "getPreparedSql");
+            String replaceSql = ReflectUtil.invoke(obj, "asSql");
+            formatPrintInfo(originalSql, replaceSql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-
-        String replaceSql = ReflectUtil.invoke(obj, "asSql");
-
-        sqlInfo(originalSql, replaceSql);
     }
 
-    private static void sqlInfo(String originalSql, String replaceSql) {
+    /**
+     * 格式化输出信息
+     *
+     * @param originalSql
+     * @param replaceSql
+     */
+    private static void formatPrintInfo(String originalSql, String replaceSql) {
         if (StrUtil.isNotBlank(originalSql)) {
-            originalSql = originalSql.replace("\n", " ").replace("\r"," ").replace("\t"," ");
+            originalSql = originalSql.replace("\n", " ").replace("\r", " ").replace("\t", " ");
         }
         if (StrUtil.isNotBlank(replaceSql)) {
-           replaceSql =  replaceSql.replace("\n", " ").replace("\r"," ").replace("\t"," ");
+            replaceSql = replaceSql.replace("\n", " ").replace("\r", " ").replace("\t", " ");
         }
         ConsoleInfoUtil.consoleInfo
                 .appendLog("数据库名称：Mysql")

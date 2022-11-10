@@ -17,6 +17,7 @@ import java.util.concurrent.Callable;
  */
 public class JunitAnnotationMonitor {
 
+
     @RuntimeType
     public static Object intercept(@This Object obj, @Origin Method method, @SuperCall Callable<?> callable, @AllArguments Object... args) throws Exception {
         Date startDate = new Date();
@@ -26,14 +27,28 @@ public class JunitAnnotationMonitor {
             resObj = callable.call();
             return resObj;
         } finally {
-            Date endDate = new Date();
+            handleInfo(startDate, obj, method);
+        }
+    }
 
+    /**
+     * 处理junit信息
+     *
+     * @param startDate
+     * @param obj
+     * @param method
+     */
+    private static void handleInfo(Date startDate, Object obj, Method method) {
+        try {
+            Date endDate = new Date();
             ConsoleInfoUtil.consoleInfo
                     .appendLog("方法名称：【" + obj.getClass().getName() + "." + method.getName() + "】")
                     .appendLog("方法执行开始时间：" + DateUtil.format(startDate, DatePattern.NORM_DATETIME_MS_PATTERN))
                     .appendLog("方法执行结束时间：" + DateUtil.format(endDate, DatePattern.NORM_DATETIME_MS_PATTERN))
                     .appendLog("累计执行时间：" + DateUtil.formatBetween(startDate, endDate))
                     .print();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

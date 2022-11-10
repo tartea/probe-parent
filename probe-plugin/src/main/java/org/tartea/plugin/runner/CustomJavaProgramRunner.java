@@ -32,21 +32,6 @@ public class CustomJavaProgramRunner extends DefaultJavaProgramRunner {
     @Override
     protected RunContentDescriptor doExecute(@NotNull RunProfileState state, @NotNull ExecutionEnvironment env) throws ExecutionException {
 
-        JavaParameters parameters = ((JavaCommandLine) state).getJavaParameters();
-        // 信息获取
-        PsiFile psiFile = env.getDataContext().getData(LangDataKeys.PSI_FILE);
-        if (psiFile instanceof PsiJavaFileImpl) {
-            PsiJavaFileImpl psiJavaFile = (PsiJavaFileImpl) psiFile;
-            //当前选择的文件包名
-            String packageName = psiJavaFile.getPackageName();
-            // 添加字节码插装
-            ParametersList parametersList = parameters.getVMParametersList();
-            //获取agent路径
-            if (StringUtils.isEmpty(instance.getAgentPath())) {
-                Project project = env.getDataContext().getData(CommonDataKeys.PROJECT);
-                Messages.showWarningDialog(project, "请手动配置agent路径", "Warning");
-            } else {
-                parametersList.add("-javaagent:" + instance.getAgentPath() + "=" + buildParam(packageName));
         try {
             if ((state instanceof JavaCommandLine) && Objects.nonNull(env.getDataContext())) {
                 JavaParameters parameters = ((JavaCommandLine) state).getJavaParameters();
@@ -63,7 +48,7 @@ public class CustomJavaProgramRunner extends DefaultJavaProgramRunner {
                         Project project = env.getDataContext().getData(CommonDataKeys.PROJECT);
                         Messages.showWarningDialog(project, "请手动配置agent路径", "Warning");
                     } else {
-                        parametersList.add("-javaagent:" + instance.getAgentPath() + "=" + packageName);
+                        parametersList.add("-javaagent:" + instance.getAgentPath() + "=" + buildParam(packageName));
                     }
                 }
             }
