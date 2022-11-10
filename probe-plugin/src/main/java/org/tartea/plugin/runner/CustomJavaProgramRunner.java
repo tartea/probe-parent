@@ -23,6 +23,8 @@ import org.tartea.plugin.infrastructure.DataSetting;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.Objects;
+
 public class CustomJavaProgramRunner extends DefaultJavaProgramRunner {
 
     private DataSetting instance = DataSetting.getInstance();
@@ -45,7 +47,28 @@ public class CustomJavaProgramRunner extends DefaultJavaProgramRunner {
                 Messages.showWarningDialog(project, "请手动配置agent路径", "Warning");
             } else {
                 parametersList.add("-javaagent:" + instance.getAgentPath() + "=" + buildParam(packageName));
+        try {
+            if ((state instanceof JavaCommandLine) && Objects.nonNull(env.getDataContext())) {
+                JavaParameters parameters = ((JavaCommandLine) state).getJavaParameters();
+                // 信息获取
+                PsiFile psiFile = env.getDataContext().getData(LangDataKeys.PSI_FILE);
+                if (psiFile instanceof PsiJavaFileImpl) {
+                    PsiJavaFileImpl psiJavaFile = (PsiJavaFileImpl) psiFile;
+                    //当前选择的文件包名
+                    String packageName = psiJavaFile.getPackageName();
+                    // 添加字节码插装
+                    ParametersList parametersList = parameters.getVMParametersList();
+                    //获取agent路径
+                    if (StringUtils.isEmpty(instance.getAgentPath())) {
+                        Project project = env.getDataContext().getData(CommonDataKeys.PROJECT);
+                        Messages.showWarningDialog(project, "请手动配置agent路径", "Warning");
+                    } else {
+                        parametersList.add("-javaagent:" + instance.getAgentPath() + "=" + packageName);
+                    }
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return super.doExecute(state, env);
     }
