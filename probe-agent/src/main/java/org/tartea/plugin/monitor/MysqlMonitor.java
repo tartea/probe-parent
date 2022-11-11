@@ -9,7 +9,9 @@ import net.bytebuddy.implementation.bind.annotation.*;
 import org.tartea.plugin.util.ConsoleInfoUtil;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
@@ -29,9 +31,9 @@ public class MysqlMonitor {
             resObj = callable.call();
             return resObj;
         } finally {
-            if (Objects.equals(obj.getClass().getSimpleName(), "PreparedStatement")) {
+            if (Objects.equals(obj.getClass().getName(), "com.mysql.jdbc.PreparedStatement")) {
                 buildPreparedStatementSql(obj);
-            } else if (Objects.equals(obj.getClass().getSimpleName(), "ClientPreparedStatement")) {
+            } else if (Objects.equals(obj.getClass().getSimpleName(), "com.mysql.cj.jdbc.ClientPreparedStatement")) {
                 buildClientPreparedStatement(obj);
             }
 
@@ -79,20 +81,14 @@ public class MysqlMonitor {
      * @param replaceSql
      */
     private static void formatPrintInfo(String originalSql, String replaceSql) {
-        if (StrUtil.isNotBlank(originalSql)) {
-            originalSql = originalSql.replace("\n", " ").replace("\r", " ").replace("\t", " ");
-        }
-        if (StrUtil.isNotBlank(replaceSql)) {
-            replaceSql = replaceSql.replace("\n", " ").replace("\r", " ").replace("\t", " ");
-        }
-        ConsoleInfoUtil.consoleInfo
-                .appendLog("数据库名称：Mysql")
-                .appendLog("线程ID：" + Thread.currentThread().getId())
-                .appendLog("时间：" + DateUtil.format(new Date(), DatePattern.NORM_DATETIME_MS_PATTERN))
-                .appendLog("原始SQL: ")
-                .appendLog(originalSql)
-                .appendLog("替换SQL：")
-                .appendLog(replaceSql);
+        List<String> infos = new ArrayList<String>();
+        infos.add("数据库名称：Mysql");
+        infos.add("时间：" + DateUtil.format(new Date(), DatePattern.NORM_DATETIME_MS_PATTERN));
+        infos.add("原始SQL: ");
+        infos.add(originalSql);
+        infos.add("替换SQL：");
+        infos.add(replaceSql);
+       ConsoleInfoUtil.console.addParams(infos);
     }
 
 }

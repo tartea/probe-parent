@@ -24,6 +24,9 @@ public class JunitMatcher extends AbstractMatcher<String> {
 
     @Override
     public ElementMatcher.Junction getMatcher(ElementMatcher.Junction elementMatcher) {
+        if(Objects.isNull(setting)){
+            return elementMatcher;
+        }
         if (Objects.isNull(elementMatcher)) {
             return ElementMatchers.nameStartsWith(this.setting);
         }
@@ -32,10 +35,12 @@ public class JunitMatcher extends AbstractMatcher<String> {
 
     @Override
     public DynamicType.Builder getBuilder(DynamicType.Builder builder) {
+        if(Objects.isNull(setting)){
+            return builder;
+        }
         return builder
-                .method(ElementMatchers.isAnnotatedWith(ElementMatchers.named("org.junit.Test")))
-                .intercept(MethodDelegation.to(JunitAnnotationMonitor.class))
-                .method(ElementMatchers.isAnnotatedWith(ElementMatchers.named("org.junit.jupiter.api.Test")))
+                .method(ElementMatchers.isAnnotatedWith(ElementMatchers.named("org.junit.Test").or(ElementMatchers.named("org.junit.jupiter.api.Test"))).or(ElementMatchers.named("start")))
                 .intercept(MethodDelegation.to(JunitAnnotationMonitor.class));
+
     }
 }

@@ -1,9 +1,9 @@
 package org.tartea.plugin.util;
 
-import org.tartea.plugin.logger.ConsoleInfo;
+import org.tartea.plugin.logger.BeautifyConsole;
 
 public class ConsoleInfoUtil {
 
-    public static ConsoleInfo consoleInfo = new ConsoleInfo();
+    public static BeautifyConsole console = new BeautifyConsole();
 
 }

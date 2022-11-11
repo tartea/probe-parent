@@ -32,6 +32,9 @@
         <!--        运行时执行-->
         <programRunner id="customJavaProgramRunner"
                        implementation="org.tartea.plugin.runner.CustomJavaProgramRunner" order="first"/>
+        <!--        debug运行时执行-->
+        <programRunner id="customDebugJavaProgramRunner"
+                       implementation="org.tartea.plugin.runner.CustomDebugJavaProgramRunner" order="first"/>
     </extensions>
 
     <actions>
