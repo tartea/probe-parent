@@ -66,9 +66,9 @@ public class Executor {
         try {
             String packageName = null;
             RunProfile runProfile = env.getRunProfile();
-            //main 方法执行
+            //TODO 目前不支持main方法
             if (runProfile instanceof ApplicationConfiguration) {
-                packageName = BaseConstant.PREFIX_MAIN_PACKAGE;
+                return;
             } else if (Objects.equals(runProfile.getClass().getSimpleName(), "JUnitConfiguration")) {
                 //由于目前没有引入JUnitConfiguration，所以采用这种方式判断
                 packageName = ReflectUtil.invoke(BeanUtil.getFieldValue(env.getRunProfile(), "myData"), "getPackageName");

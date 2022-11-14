@@ -4,7 +4,7 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import net.bytebuddy.implementation.bind.annotation.*;
 import org.tartea.plugin.constants.BaseConstant;
-import org.tartea.plugin.util.ConsoleInfoUtil;
+import org.tartea.plugin.logger.BeautifyConsole;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class JunitAnnotationMonitor {
                 infos.add("方法执行开始时间：" + DateUtil.format(startDate, DatePattern.NORM_DATETIME_MS_PATTERN));
                 infos.add("方法执行结束时间：" + DateUtil.format(endDate, DatePattern.NORM_DATETIME_MS_PATTERN));
                 infos.add("累计执行时间：" + DateUtil.formatBetween(startDate, endDate));
-                ConsoleInfoUtil.console.addParams(infos).print();
+                new BeautifyConsole().printInfo(infos);
             }
         } catch (Exception e) {
             e.printStackTrace();

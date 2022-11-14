@@ -4,9 +4,8 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.core.util.StrUtil;
 import net.bytebuddy.implementation.bind.annotation.*;
-import org.tartea.plugin.util.ConsoleInfoUtil;
+import org.tartea.plugin.logger.BeautifyConsole;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class MysqlMonitor {
         } finally {
             if (Objects.equals(obj.getClass().getName(), "com.mysql.jdbc.PreparedStatement")) {
                 buildPreparedStatementSql(obj);
-            } else if (Objects.equals(obj.getClass().getSimpleName(), "com.mysql.cj.jdbc.ClientPreparedStatement")) {
+            } else if (Objects.equals(obj.getClass().getName(), "com.mysql.cj.jdbc.ClientPreparedStatement")) {
                 buildClientPreparedStatement(obj);
             }
 
@@ -88,7 +87,7 @@ public class MysqlMonitor {
         infos.add(originalSql);
         infos.add("替换SQL：");
         infos.add(replaceSql);
-       ConsoleInfoUtil.console.addParams(infos);
+        new BeautifyConsole().printInfo(infos);
     }
 
 }

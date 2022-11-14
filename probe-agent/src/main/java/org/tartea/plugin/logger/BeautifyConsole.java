@@ -12,7 +12,7 @@ public class BeautifyConsole {
     List<String> result = new ArrayList<>();
 
 
-    public synchronized BeautifyConsole addParams(List<String> params) {
+    public void printInfo(List<String> params) {
         result.add(SEPARATOR);
         params.forEach(param -> {
             final String replace = param.replace("\r", " ").replace("\n", "");
@@ -20,23 +20,20 @@ public class BeautifyConsole {
             result.add(replace);
         });
         result.add(SEPARATOR);
-        return this;
+        print();
     }
 
-    public synchronized void print() {
+    public void print() {
         System.out.print("\033[1;94m");
         String outerBorder = rightPad("", width + 6, "_");
         String empty = "  ";
-        String innerBorder = rightPad(empty, width + 4, "_");
         System.out.println(outerBorder);
         for (String s : result) {
-            if (Objects.equals(s, SEPARATOR)) {
-                System.out.printf("%s", innerBorder);
-                System.out.println();
-            } else {
+            if (!Objects.equals(s, SEPARATOR)) {
                 System.out.println(empty + s);
             }
         }
         System.out.println(outerBorder);
+        System.out.println("\033[0m");
     }
 }

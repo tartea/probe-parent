@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.6.3'
 }
-
 dependencies {
     // compile project(":probe-agent") 另一种引入工程的方式
     implementation fileTree(dir: 'libs', includes: ['*jar'])
